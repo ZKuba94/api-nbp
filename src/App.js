@@ -1,25 +1,37 @@
-import logo from './logo.svg';
 import './App.css';
-
+import 'bootstrap/dist/css/bootstrap.min.css';
+import Header from './Header'
+import Inputs from './Inputs'
+import CurrencyList from './CurrencyList'
+import {useState} from "react";
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    const [currency, setCurrency] = useState('')
+    const [number, setNumber] = useState(0)
+    return (
+        <div className="App">
+            <Header/>
+            <Inputs
+                currencies={currencies}
+                actCurrency={currency}
+                number={number}
+                onCurrencyChange={setCurrency}
+                onNumberChange={setNumber}
+            />
+            <CurrencyList
+                currencies={currencies}
+                actCurrency={currency}
+                number={number}
+                onCurrencyChange={setCurrency}
+                onNumberChange={setNumber}
+            />
+        </div>
+    );
 }
 
+const currencies = [
+    {key: 'EUR'},
+    {key: 'USD'},
+    {key: 'BTH'},
+    {key: 'HUF'}
+]
 export default App;
