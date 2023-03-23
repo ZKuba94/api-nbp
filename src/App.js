@@ -7,6 +7,7 @@ import {useState} from "react";
 function App() {
     const [currency, setCurrency] = useState('')
     const [number, setNumber] = useState(0)
+    // const [table,setTable] = useState([])
     return (
         <div className="App">
             <Header/>
@@ -20,8 +21,8 @@ function App() {
             <CurrencyList
                 actCurrency={currency}
                 number={number}
-                onCurrencyChange={setCurrency}
-                onNumberChange={setNumber}
+                // table={table}
+                // onTableChange={setTable}
             />
         </div>
     );
