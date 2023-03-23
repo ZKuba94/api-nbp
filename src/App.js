@@ -18,7 +18,6 @@ function App() {
                 onNumberChange={setNumber}
             />
             <CurrencyList
-                currencies={currencies}
                 actCurrency={currency}
                 number={number}
                 onCurrencyChange={setCurrency}

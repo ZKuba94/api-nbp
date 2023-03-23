@@ -1,28 +1,19 @@
+import {useEffect} from "react";
+import {useState} from "react";
+function Record({number, currency}) {
+    const [table,setTable] = useState([])
 
-function Record({currencies,actCurrency,number,onCurrencyChange,onNumberChange,currency}) {
-    // console.log(currency,parseFloat(number))
-    const currencyItems = Array.from(Array(parseFloat(number)).keys())
-    // console.log(currencyItems)
-    const items = async (currency,number) => {
-        try {
-            const list = await fetch(`http://api.nbp.pl/api/exchangerates/rates/A/${currency}/last/${number}/`,{
-                headers: {Accept: 'application/json'}
-            })
-                .then(res=>res.json())
-            return list
-        } catch (e) {
-            console.error(e)
-        }
-    }
-    // const currencyItemsList = currencyItems.map(el =>
-    //     <li className='list-unstyled'>{date} | 4.7546</li>
-    // )
-    items(currency,number)
+    useEffect(()=> {
+        fetch(`https://api.nbp.pl/api/exchangerates/rates/A/${currency}/last/${number}/`)
+            .then(data => data.json()).then(list => setTable(list.rates))},[])
+    console.log(table)
     return (
         <>
-            <li className='list-unstyled'>20-03-2023 | 4.7546</li>
-
+            {table.map(item => (
+                <li className='list-unstyled'>{item.effectiveDate} | {item.mid}</li>
+            ))}
         </>
     )
 }
+
 export default Record;
