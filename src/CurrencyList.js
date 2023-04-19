@@ -7,7 +7,7 @@ function CurrencyList({actCurrency, number}) {
     const [table,setTable] = useState([])
     useEffect(() => {
         const fetchData = async () => {
-            const {data} = await axios.get(`https://api.nbp.pl/api/exchangerates/rates/A/${actCurrency}/last/${number}/`);
+            const {data} = await axios.get(`/api/exchangerates/rates/A/${actCurrency}/last/${number}/`);
             setTable(data.rates)
         }
         fetchData()
