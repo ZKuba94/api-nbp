@@ -3,14 +3,14 @@ import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import {useEffect, useState} from "react";
 import axios from "axios";
-// import {currencies} from "./currencies";
+import PropTypes from "prop-types";
 
 function Inputs({actCurrency, number, onCurrencyChange, onNumberChange}) {
     // new thing
     const [curr, setCurr] = useState([])
     useEffect(() => {
         const fetchData = async () => {
-            const {data} = await axios.get(`http://api.nbp.pl/api/exchangerates/tables/A/`)
+            const {data} = await axios.get(`/api/exchangerates/tables/A/`)
             setCurr(data[0].rates.map(el => [el.currency, el.code]))
         }
         fetchData()
@@ -23,8 +23,12 @@ function Inputs({actCurrency, number, onCurrencyChange, onNumberChange}) {
         <Form as={Row}>
             <Form.Group as={Col} sm={6}>
                 <Form.Label>Currency</Form.Label>
-                <Form.Select value={actCurrency}
-                             onChange={(e) => onCurrencyChange(e.target.value)}>{listItems}</Form.Select>
+                <Form.Select
+                    value={actCurrency}
+                    onChange={(e) => onCurrencyChange(e.target.value)}
+                >
+                    {listItems}
+                </Form.Select>
             </Form.Group>
             <Form.Group as={Col} sm={6}>
                 <Form.Label>How many records</Form.Label>
@@ -34,4 +38,10 @@ function Inputs({actCurrency, number, onCurrencyChange, onNumberChange}) {
     )
 }
 
+Inputs.propTypes = {
+    actCurrency: PropTypes.string.isRequired,
+    number: PropTypes.number.isRequired,
+    onCurrencyChange: PropTypes.func.isRequired,
+    onNumberChange: PropTypes.func.isRequired,
+}
 export default Inputs;

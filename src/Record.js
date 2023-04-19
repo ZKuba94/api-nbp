@@ -1,13 +1,15 @@
 import React from "react";
 import {Button} from "react-bootstrap";
+import PropTypes from "prop-types";
 
-function Record({id, date, record}) {
-    const handleCopyClick = () => {navigator.clipboard.writeText(record)}
+function Record({currencyItem}) {
+    const {mid,effectiveDate,no} = currencyItem
+    const handleCopyClick = () => {navigator.clipboard.writeText(mid)}
     return (
         <li className='list-unstyled m-1'>
-            {id} |&nbsp;
-            {date} |&nbsp;
-            <span style={{fontWeight: 'bold'}}>{record}</span> |&nbsp;
+            {no} |&nbsp;
+            {effectiveDate} |&nbsp;
+            <span style={{fontWeight: 'bold'}}>{mid}</span> |&nbsp;
             <Button
                 onClick={handleCopyClick}
                 className="d-inline"
@@ -19,5 +21,11 @@ function Record({id, date, record}) {
         </li>
     )
 }
-
+Record.propTypes = {
+    currencyItem: PropTypes.shape({
+        mid: PropTypes.number.isRequired,
+        effectiveDate: PropTypes.string.isRequired,
+        no: PropTypes.string.isRequired,
+    }).isRequired,
+}
 export default Record;

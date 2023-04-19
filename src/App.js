@@ -4,9 +4,10 @@ import Header from './Header'
 import Inputs from './Inputs'
 import CurrencyList from './CurrencyList'
 import {useState} from "react";
+
 function App() {
-    const [currency, setCurrency] = useState('')
-    const [number, setNumber] = useState(0)
+    const [currency, setCurrency] = useState('EUR')
+    const [number, setNumber] = useState(10)
     return (
         <div className="App">
             <Header/>
@@ -17,10 +18,11 @@ function App() {
                 onNumberChange={setNumber}
             />
             <CurrencyList
-                actCurrency={currency}
                 number={number}
+                actCurrency={currency}
             />
         </div>
     );
 }
+
 export default App;
