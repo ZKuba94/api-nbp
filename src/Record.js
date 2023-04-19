@@ -1,10 +1,15 @@
-import React from "react";
+import React, {useState} from "react";
 import {Button} from "react-bootstrap";
 import PropTypes from "prop-types";
 
 function Record({currencyItem}) {
     const {mid,effectiveDate,no} = currencyItem
-    const handleCopyClick = () => {navigator.clipboard.writeText(mid)}
+    const [copied,setCopied] = useState(false)
+    const handleCopyClick = () => {
+        navigator.clipboard.writeText(mid)
+        setCopied(true)
+        setTimeout(()=> setCopied(false),1500)
+    }
     return (
         <li className='list-unstyled m-1'>
             {no} |&nbsp;
@@ -13,7 +18,7 @@ function Record({currencyItem}) {
             <Button
                 onClick={handleCopyClick}
                 className="d-inline"
-                variant="outline-light"
+                variant={copied?"success":"outline-light"}
                 size="sm"
             >
                 copy
