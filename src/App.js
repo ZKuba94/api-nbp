@@ -18,8 +18,8 @@ function App() {
                 onNumberChange={setNumber}
             />
             <CurrencyList
-                number={number}
                 actCurrency={currency}
+                number={number}
             />
         </div>
     );

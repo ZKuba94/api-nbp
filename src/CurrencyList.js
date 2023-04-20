@@ -1,10 +1,8 @@
-import Container from 'react-bootstrap/Container';
-import Row from 'react-bootstrap/Row'
 import Record from './Record'
 import {useEffect, useState} from "react";
+import {ListGroup, Container, Row} from "react-bootstrap";
 import axios from "axios";
 import PropTypes from "prop-types";
-import {ListGroup} from "react-bootstrap";
 
 function CurrencyList({actCurrency, number}) {
     const [table, setTable] = useState([])

@@ -8,7 +8,7 @@ function Record({currencyItem}) {
     const handleCopyClick = () => {
         navigator.clipboard.writeText(mid)
         setCopied(true)
-        setTimeout(() => setCopied(false), 1500)
+        setTimeout(() => setCopied(false), 1000)
     }
     return (
         <ListGroup.Item action variant="dark">
