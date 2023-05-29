@@ -5,10 +5,8 @@ import PropTypes from "prop-types";
 import {useNavigate} from 'react-router-dom'
 
 export function Inputs({actCurrency, actNumber, onCurrencyChange, onNumberChange}) {
-    // let {currency1, number1} = useParams()
     const [currencies, setCurrencies] = useState([])
     const navigate = useNavigate()
-
     useEffect(() => {
         const fetchData = async () => {
             const {data} = await axios.get(`/api/exchangerates/tables/A`)
@@ -19,7 +17,6 @@ export function Inputs({actCurrency, actNumber, onCurrencyChange, onNumberChange
     const listItems = currencies.map(currency =>
         <option key={currency[1]} value={currency[1]}>{currency[1]} - {currency[0]}</option>
     )
-
 
     // function debounce(func, wait) {
     //     let timeout;

@@ -12,14 +12,14 @@ function App() {
             parseFloat((window.location.pathname).slice(5))]
     const [currency, setCurrency] = useState(currFromUrl || 'EUR')
     const [number, setNumber] = useState(numberFromUrl || 10)
-
+    console.log(currFromUrl,numberFromUrl)
     return (
         <Router>
             <div className="App">
                 <Header/>
                 <Inputs
-                    actCurrency={currency}
-                    actNumber={number}
+                    actCurrency={currFromUrl || currency}
+                    actNumber={numberFromUrl || number}
                     onCurrencyChange={setCurrency}
                     onNumberChange={setNumber}
                 />
