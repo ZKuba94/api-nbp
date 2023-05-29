@@ -4,15 +4,15 @@ import {ListGroup, Container, Row} from "react-bootstrap";
 import axios from "axios";
 import PropTypes from "prop-types";
 
-function CurrencyList({actCurrency, number}) {
+function CurrencyList({actCurrency, actNumber}) {
     const [table, setTable] = useState([])
     useEffect(() => {
         const fetchData = async () => {
-            const {data} = await axios.get(`/api/exchangerates/rates/A/${actCurrency}/last/${number}/`);
+            const {data} = await axios.get(`/api/exchangerates/rates/A/${actCurrency}/last/${actNumber}/`);
             setTable(data.rates)
         }
         fetchData()
-    }, [actCurrency, number])
+    }, [actCurrency, actNumber])
     return (
         <Container className='d-flex justify-content-center'>
             <Row className='justify-content-center mt-3 w-50'>
@@ -31,6 +31,6 @@ function CurrencyList({actCurrency, number}) {
 
 CurrencyList.propTypes = {
     actCurrency: PropTypes.string.isRequired,
-    number: PropTypes.number.isRequired,
+    actNumber: PropTypes.number.isRequired,
 }
 export default CurrencyList;
