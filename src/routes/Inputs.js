@@ -23,21 +23,22 @@ export function Inputs({actCurrency, actNumber, onCurrencyChange, onNumberChange
             as={Row}
             id="search-form"
             role="search"
+            className='mx-0'
         >
-            <Form.Group as={Col} sm={6}>
-                <Form.Label>Currency</Form.Label>
-                <Form.Select
-                    name="currencies"
-                    value={actCurrency}
-                    onChange={(e) => {
-                        onCurrencyChange(e.target.value)
-                        navigate(`/${e.target.value}/${actNumber}`)
-                    }}
-                >
-                    {listItems}
-                </Form.Select>
+            <Form.Group as={Col}>
+                    <Form.Label>Currency</Form.Label>
+                    <Form.Select
+                        name="currencies"
+                        value={actCurrency}
+                        onChange={(e) => {
+                            onCurrencyChange(e.target.value)
+                            navigate(`/${e.target.value}/${actNumber}`)
+                        }}
+                    >
+                        {listItems}
+                    </Form.Select>
             </Form.Group>
-            <Form.Group as={Col} sm={6}>
+            <Form.Group as={Col}>
                 <Form.Label>
                     How many records
                 </Form.Label>
