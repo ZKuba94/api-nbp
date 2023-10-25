@@ -12,7 +12,6 @@ function App() {
             parseFloat((window.location.pathname).slice(5))]
     const [currency, setCurrency] = useState(currFromUrl || 'EUR')
     const [number, setNumber] = useState(numberFromUrl || 10)
-    console.log(currFromUrl,numberFromUrl)
     return (
         <Router>
             <div className="App">
@@ -26,18 +25,22 @@ function App() {
                 <Routes>
                     <Route
                         path="/"
-                        element={<CurrencyList
-                            actCurrency={'EUR'}
-                            actNumber={10}
-                        />}
+                        element={
+                            <CurrencyList
+                                actCurrency={'EUR'}
+                                actNumber={10}
+                            />
+                        }
                     />
                     <Route
                         index
                         path="/:actCurrency/:actNumber"
-                        element={<CurrencyList
-                            actCurrency={currFromUrl || currency}
-                            actNumber={numberFromUrl || number}
-                        />}
+                        element={
+                            <CurrencyList
+                                actCurrency={currFromUrl || currency}
+                                actNumber={numberFromUrl || number}
+                            />
+                        }
                     />
                 </Routes>
             </div>

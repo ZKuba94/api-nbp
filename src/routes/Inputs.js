@@ -18,23 +18,6 @@ export function Inputs({actCurrency, actNumber, onCurrencyChange, onNumberChange
         <option key={currency[1]} value={currency[1]}>{currency[1]} - {currency[0]}</option>
     )
 
-    // function debounce(func, wait) {
-    //     let timeout;
-    //     return function executedFunction(num) {
-    //         const context = this;
-    //         const later = (num) => {
-    //             clearTimeout(timeout);
-    //             func.call(context, num)
-    //         }
-    //         clearTimeout(timeout)
-    //         timeout = setTimeout(() => later(num), wait)
-    //     }
-    // }
-    //
-    // const debounceSearch = debounce((number) => {
-    //     onNumberChange(number)
-    // }, 300)
-
     return (
         <Form
             as={Row}
@@ -63,7 +46,6 @@ export function Inputs({actCurrency, actNumber, onCurrencyChange, onNumberChange
                     type="number"
                     value={actNumber}
                     onChange={(e) => {
-                        // debounceSearch(parseFloat(e.target.value))
                         onNumberChange(parseFloat(e.target.value))
                         navigate(`/${actCurrency}/${parseFloat(e.target.value)}`)
                     }}

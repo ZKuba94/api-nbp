@@ -13,10 +13,30 @@ function CurrencyList({actCurrency, actNumber}) {
         }
         fetchData()
     }, [actCurrency, actNumber])
+
+    // function debounce(func, wait) {
+    //     let timeout;
+    //     return function executedFunction(num) {
+    //         const context = this;
+    //         const later = (num) => {
+    //             clearTimeout(timeout);
+    //             func.call(context, num)
+    //         }
+    //         clearTimeout(timeout)
+    //         timeout = setTimeout(() => later(num), wait)
+    //     }
+    // }
+    //
+    // const debounceSearch = debounce((number) => {
+    //     onNumberChange(number)
+    // }, 500)
+
+    // debounceSearch(parseFloat(e.target.value))
+
     return (
         <Container className='d-flex justify-content-center'>
             <Row className='justify-content-center mt-3 w-50'>
-                <ListGroup>
+                <ListGroup style={{minWidth:'240px'}}>
                     {table.map(item => (
                         <Record
                             currencyItem={item}
