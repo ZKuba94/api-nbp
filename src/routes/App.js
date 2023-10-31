@@ -5,13 +5,16 @@ import Inputs from './Inputs'
 import CurrencyList from './CurrencyList'
 import {useState} from "react";
 import {BrowserRouter as Router, Route, Routes} from "react-router-dom";
+import ErrorHandler from "./ErrorHandler";
 
 function App() {
     const [currFromUrl, numberFromUrl] =
         [((window.location.pathname).slice(1, 4)).toUpperCase(),
             parseFloat((window.location.pathname).slice(5))]
     const [currency, setCurrency] = useState(currFromUrl || 'EUR')
-    const [number, setNumber] = useState(numberFromUrl || 10)
+    const [number, setNumber] = useState(numberFromUrl === 0 || numberFromUrl || 10)
+    const [errorMessage, setErrorMessage] = useState(false)
+    const [errorVariant, setErrorVariant] = useState('')
     return (
         <Router>
             <div className="App">
@@ -21,6 +24,8 @@ function App() {
                     actNumber={numberFromUrl || number}
                     onCurrencyChange={setCurrency}
                     onNumberChange={setNumber}
+                    onErrorChange={setErrorMessage}
+                    onErrorVariantChange={setErrorVariant}
                 />
                 <Routes>
                     <Route
@@ -29,6 +34,18 @@ function App() {
                             <CurrencyList
                                 actCurrency={'EUR'}
                                 actNumber={10}
+                                onErrorChange={setErrorMessage}
+                                onErrorVariantChange={setErrorVariant}
+                            />
+                        }
+                    />
+                    <Route
+                        path="/error"
+                        element={
+                            errorMessage && errorVariant &&
+                            <ErrorHandler
+                                errorMessage={errorMessage}
+                                errorVariant={errorVariant}
                             />
                         }
                     />
@@ -38,7 +55,10 @@ function App() {
                         element={
                             <CurrencyList
                                 actCurrency={currFromUrl || currency}
-                                actNumber={numberFromUrl || number}
+                                actNumber={(numberFromUrl || number)}
+                                onCurrencyChange={setCurrency}
+                                onErrorChange={setErrorMessage}
+                                onErrorVariantChange={setErrorVariant}
                             />
                         }
                     />
