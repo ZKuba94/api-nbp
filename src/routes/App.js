@@ -13,7 +13,7 @@ function App() {
             parseFloat((window.location.pathname).slice(5))]
     const [currency, setCurrency] = useState(currFromUrl || 'EUR')
     const [number, setNumber] = useState(numberFromUrl === 0 || numberFromUrl || 10)
-    const [errorMessage, setErrorMessage] = useState(false)
+    const [errorMessage, setErrorMessage] = useState('')
     const [errorVariant, setErrorVariant] = useState('')
     return (
         <Router>
@@ -26,6 +26,8 @@ function App() {
                     onNumberChange={setNumber}
                     onErrorChange={setErrorMessage}
                     onErrorVariantChange={setErrorVariant}
+                    currencyFromUrl={currFromUrl}
+                    numberFromUrl={numberFromUrl}
                 />
                 <Routes>
                     <Route
@@ -42,11 +44,30 @@ function App() {
                     <Route
                         path="/error"
                         element={
-                            errorMessage && errorVariant &&
+                            errorMessage &&
+                            errorVariant &&
                             <ErrorHandler
                                 errorMessage={errorMessage}
                                 errorVariant={errorVariant}
                             />
+                        }
+                    />
+                    <Route
+                        path="/:actCurrency"
+                        element={(
+                                errorMessage &&
+                                errorVariant &&
+                                <ErrorHandler
+                                    errorMessage={errorMessage}
+                                    errorVariant={errorVariant}
+                                />) ||
+                            <CurrencyList
+                                actCurrency={currFromUrl || currency}
+                                actNumber={(numberFromUrl || number)}
+                                onErrorChange={setErrorMessage}
+                                onErrorVariantChange={setErrorVariant}
+                            />
+
                         }
                     />
                     <Route
@@ -56,7 +77,6 @@ function App() {
                             <CurrencyList
                                 actCurrency={currFromUrl || currency}
                                 actNumber={(numberFromUrl || number)}
-                                onCurrencyChange={setCurrency}
                                 onErrorChange={setErrorMessage}
                                 onErrorVariantChange={setErrorVariant}
                             />

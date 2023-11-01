@@ -1,4 +1,6 @@
 import {Alert} from "react-bootstrap";
+import PropTypes from "prop-types";
+
 function ErrorHandler({errorMessage, errorVariant}) {
     return (
         <>
@@ -11,4 +13,10 @@ function ErrorHandler({errorMessage, errorVariant}) {
         </>
     )
 }
+
 export default ErrorHandler;
+
+ErrorHandler.propTypes = {
+    errorMessage: PropTypes.string.isRequired,
+    errorVariant: PropTypes.string.isRequired,
+}

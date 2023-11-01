@@ -4,28 +4,45 @@ import axios from "axios";
 import PropTypes from "prop-types";
 import {useNavigate} from 'react-router-dom'
 
-export function Inputs({actCurrency, actNumber, onCurrencyChange, onNumberChange, onErrorChange, onErrorVariantChange}) {
+export function Inputs({
+                           actCurrency,
+                           actNumber,
+                           onCurrencyChange,
+                           onNumberChange,
+                           onErrorChange,
+                           onErrorVariantChange,
+                           currencyFromUrl,
+                           numberFromUrl,
+                       }) {
     const [currencies, setCurrencies] = useState([])
-    const [loading,setLoading] = useState(true)
+    const [loading, setLoading] = useState(true)
     const navigate = useNavigate()
     useEffect(() => {
         const fetchData = async () => {
             try {
-                // setLoading(true)
                 const {data} = await axios.get(`/api/exchangerates/tables/A`)
-                setCurrencies(data[0].rates.map(el => ({'name':el.currency, code: el.code})))
-                setLoading(false)
+                setCurrencies(data[0].rates.map(el => ({'name': el.currency, code: el.code})))
+                const curr = (data[0].rates.map(el => ({'name': el.currency, code: el.code}))).map(el => el.code)
+                if (Number.isNaN(numberFromUrl || actNumber)) {
+                    onErrorChange(`Please insert the number in range 1-255`)
+                    onErrorVariantChange('warning')
+                    navigate(`/${actCurrency}`)
+                } else if (!curr.includes(currencyFromUrl || actCurrency)) {
+                    onErrorChange(`Please select currency from the list below or insert it in international 
+                    format, e.g. 'AUD', 'USD', 'EUR', etc.`)
+                    onErrorVariantChange('warning')
+                    navigate(`/error`)
+                }
             } catch (error) {
-                onErrorChange(error.message)
+                onErrorChange(`Cannot get the resources because of incorrect reference. ${error.message}`)
                 onErrorVariantChange('danger')
                 navigate(`/error`)
             } finally {
-                // setLoading(false)
+                setLoading(false)
             }
-
         }
         fetchData()
-    }, [navigate,actCurrency,actNumber])
+    }, [navigate, actCurrency, actNumber, currencyFromUrl, numberFromUrl])
     const listItems = currencies.map(currency =>
         <option key={currency.code} value={currency['code']}>{currency.code} - {currency.name}</option>
     )
@@ -39,18 +56,18 @@ export function Inputs({actCurrency, actNumber, onCurrencyChange, onNumberChange
             className='mx-0'
         >
             <Form.Group as={Col}>
-                    <Form.Label>Currency {loading && 'loading...'}</Form.Label>
-                    <Form.Select
-                        name="currencies"
-                        value={actCurrency}
-                        // onInput={}
-                        onChange={(e) => {
-                            onCurrencyChange(e.target.value)
-                            navigate(`/${e.target.value}/${actNumber}`)
-                        }}
-                    >
-                        {listItems}
-                    </Form.Select>
+                <Form.Label>Currency {loading && 'loading...'}</Form.Label>
+                <Form.Select
+                    name="currencies"
+                    value={actCurrency}
+                    // onInput={}
+                    onChange={(e) => {
+                        onCurrencyChange(e.target.value)
+                        navigate(`/${e.target.value}/${actNumber}`)
+                    }}
+                >
+                    {listItems}
+                </Form.Select>
             </Form.Group>
             <Form.Group as={Col}>
                 <Form.Label>
@@ -66,7 +83,7 @@ export function Inputs({actCurrency, actNumber, onCurrencyChange, onNumberChange
                     value={actNumber}
                     onChange={(e) => {
                         onNumberChange(parseFloat(e.target.value))
-                        navigate(`/${actCurrency}/${+e.target.value}`)
+                        navigate(`/${actCurrency}/${parseFloat(e.target.value)}`)
                     }}
                 />
             </Form.Group>
@@ -79,5 +96,9 @@ Inputs.propTypes = {
     actNumber: PropTypes.number.isRequired,
     onCurrencyChange: PropTypes.func.isRequired,
     onNumberChange: PropTypes.func.isRequired,
+    onErrorChange: PropTypes.func.isRequired,
+    onErrorVariantChange: PropTypes.func.isRequired,
+    currencyFromUrl: PropTypes.string.isRequired,
+    numberFromUrl: PropTypes.number.isRequired,
 }
 export default Inputs;
