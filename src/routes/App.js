@@ -10,9 +10,9 @@ import ErrorHandler from "./ErrorHandler";
 function App() {
     const [currFromUrl, numberFromUrl] =
         [((window.location.pathname).slice(1, 4)).toUpperCase(),
-            parseFloat((window.location.pathname).slice(5))]
+            Number((window.location.pathname).slice(5))]
     const [currency, setCurrency] = useState(currFromUrl || 'EUR')
-    const [number, setNumber] = useState(numberFromUrl === 0 || numberFromUrl || 10)
+    const [number, setNumber] = useState(numberFromUrl || 10)
     const [errorMessage, setErrorMessage] = useState('')
     const [errorVariant, setErrorVariant] = useState('')
     return (
@@ -20,7 +20,7 @@ function App() {
             <div className="App">
                 <Header/>
                 <Inputs
-                    actCurrency={currFromUrl || currency}
+                    actCurrency={currency || currFromUrl}
                     actNumber={numberFromUrl || number}
                     onCurrencyChange={setCurrency}
                     onNumberChange={setNumber}
@@ -31,15 +31,16 @@ function App() {
                 />
                 <Routes>
                     <Route
+                        index
                         path="/"
                         element={
                             <CurrencyList
                                 actCurrency={'EUR'}
                                 actNumber={10}
+                                onCurrencyChange={setCurrency}
                                 onErrorChange={setErrorMessage}
                                 onErrorVariantChange={setErrorVariant}
-                            />
-                        }
+                            />}
                     />
                     <Route
                         path="/error"
@@ -64,6 +65,7 @@ function App() {
                             <CurrencyList
                                 actCurrency={currFromUrl || currency}
                                 actNumber={(numberFromUrl || number)}
+                                onCurrencyChange={setCurrency}
                                 onErrorChange={setErrorMessage}
                                 onErrorVariantChange={setErrorVariant}
                             />
@@ -71,12 +73,12 @@ function App() {
                         }
                     />
                     <Route
-                        index
                         path="/:actCurrency/:actNumber"
                         element={
                             <CurrencyList
                                 actCurrency={currFromUrl || currency}
                                 actNumber={(numberFromUrl || number)}
+                                onCurrencyChange={setCurrency}
                                 onErrorChange={setErrorMessage}
                                 onErrorVariantChange={setErrorVariant}
                             />
@@ -85,7 +87,7 @@ function App() {
                 </Routes>
             </div>
         </Router>
-    );
+    )
 }
 
 export default App;

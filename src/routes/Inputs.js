@@ -23,15 +23,15 @@ export function Inputs({
                 const {data} = await axios.get(`/api/exchangerates/tables/A`)
                 setCurrencies(data[0].rates.map(el => ({'name': el.currency, code: el.code})))
                 const curr = (data[0].rates.map(el => ({'name': el.currency, code: el.code}))).map(el => el.code)
-                if (Number.isNaN(numberFromUrl || actNumber)) {
-                    onErrorChange(`Please insert the number in range 1-255`)
-                    onErrorVariantChange('warning')
-                    navigate(`/${actCurrency}`)
-                } else if (!curr.includes(currencyFromUrl || actCurrency)) {
-                    onErrorChange(`Please select currency from the list below or insert it in international 
+                if (!curr.includes(actCurrency || currencyFromUrl)) {
+                    onErrorChange(`Please select currency from the list above or insert it in international 
                     format, e.g. 'AUD', 'USD', 'EUR', etc.`)
                     onErrorVariantChange('warning')
                     navigate(`/error`)
+                } else if (Number.isNaN(actNumber)) {
+                    onErrorChange(`Please insert number in range 1-255.`)
+                    onErrorVariantChange('secondary')
+                    navigate(`/${actCurrency}`)
                 }
             } catch (error) {
                 onErrorChange(`Cannot get the resources because of incorrect reference. ${error.message}`)
@@ -60,6 +60,7 @@ export function Inputs({
                 <Form.Select
                     name="currencies"
                     value={actCurrency}
+                    placeholder='Select currency'
                     // onInput={}
                     onChange={(e) => {
                         onCurrencyChange(e.target.value)
