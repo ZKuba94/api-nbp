@@ -24,14 +24,10 @@ export function Inputs({
                 setCurrencies(data[0].rates.map(el => ({'name': el.currency, code: el.code})))
                 const curr = (data[0].rates.map(el => ({'name': el.currency, code: el.code}))).map(el => el.code)
                 if (!curr.includes(actCurrency || currencyFromUrl)) {
-                    onErrorChange(`Please select currency from the list above or insert it in international 
+                    onErrorChange(`Please select currency from the list above or insert it in international
                     format, e.g. 'AUD', 'USD', 'EUR', etc.`)
-                    onErrorVariantChange('warning')
+                    onErrorVariantChange('danger')
                     navigate(`/error`)
-                } else if (Number.isNaN(actNumber)) {
-                    onErrorChange(`Please insert number in range 1-255.`)
-                    onErrorVariantChange('secondary')
-                    navigate(`/${actCurrency}`)
                 }
             } catch (error) {
                 onErrorChange(`Cannot get the resources because of incorrect reference. ${error.message}`)

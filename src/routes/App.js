@@ -37,7 +37,6 @@ function App() {
                             <CurrencyList
                                 actCurrency={'EUR'}
                                 actNumber={10}
-                                onCurrencyChange={setCurrency}
                                 onErrorChange={setErrorMessage}
                                 onErrorVariantChange={setErrorVariant}
                             />}
@@ -65,7 +64,6 @@ function App() {
                             <CurrencyList
                                 actCurrency={currFromUrl || currency}
                                 actNumber={(numberFromUrl || number)}
-                                onCurrencyChange={setCurrency}
                                 onErrorChange={setErrorMessage}
                                 onErrorVariantChange={setErrorVariant}
                             />
@@ -78,7 +76,6 @@ function App() {
                             <CurrencyList
                                 actCurrency={currFromUrl || currency}
                                 actNumber={(numberFromUrl || number)}
-                                onCurrencyChange={setCurrency}
                                 onErrorChange={setErrorMessage}
                                 onErrorVariantChange={setErrorVariant}
                             />

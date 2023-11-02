@@ -5,7 +5,7 @@ import axios from "axios";
 import PropTypes from "prop-types";
 import {useNavigate} from "react-router-dom";
 
-function CurrencyList({actCurrency, actNumber, onErrorChange, onErrorVariantChange, onCurrencyChange}) {
+function CurrencyList({actCurrency, actNumber, onErrorChange, onErrorVariantChange}) {
     const [table, setTable] = useState([])
     const [loading, setLoading] = useState(false)
     const navigate = useNavigate()
@@ -18,9 +18,10 @@ function CurrencyList({actCurrency, actNumber, onErrorChange, onErrorVariantChan
                 );
                 setTable(data.rates);
             } catch (error) {
-                onErrorChange(`Your request is out of range, please choose number 1-255. ${error.message}`)
+                // onErrorChange(`Your request is out of range, please choose number 1-255. ${error.message}`)
+                onErrorChange(`Please insert number in range 1-255.`)
                 onErrorVariantChange('danger')
-                navigate(`/error`)
+                navigate(`/${actCurrency}`)
             } finally {
                 setLoading(false)
             }
@@ -56,6 +57,5 @@ CurrencyList.propTypes = {
     actNumber: PropTypes.number.isRequired,
     onErrorChange: PropTypes.func.isRequired,
     onErrorVariantChange: PropTypes.func.isRequired,
-    onCurrencyChange: PropTypes.func.isRequired,
 }
 export default CurrencyList;
