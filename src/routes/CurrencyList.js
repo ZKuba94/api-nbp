@@ -5,20 +5,20 @@ import axios from "axios";
 import PropTypes from "prop-types";
 import {useNavigate} from "react-router-dom";
 
-function CurrencyList({actCurrency, actNumber, onErrorChange, onErrorVariantChange, onNumberChange}) {
+function CurrencyList({actCurrency, actNumber, onErrorChange, onErrorVariantChange}) {
     const [table, setTable] = useState([])
     const [loading, setLoading] = useState(false)
     const navigate = useNavigate()
     const debounceFetch = () => {
         const fetchData = async () => {
             try {
+                console.log(actNumber)
                 setLoading(true)
                 const {data} = await axios.get(
                     `/api/exchangerates/rates/A/${actCurrency}/last/${actNumber}/`
                 );
                 setTable(data.rates);
             } catch (error) {
-                // onNumberChange(actNumber)
                 // onErrorChange(`Your request is out of range, please choose number 1-255. ${error.message}`)
                 onErrorChange(`Please insert number in range 1-255.`)
                 onErrorVariantChange('danger')
@@ -35,7 +35,6 @@ function CurrencyList({actCurrency, actNumber, onErrorChange, onErrorVariantChan
             clearTimeout(timer)
         }
     }, [actCurrency, actNumber, navigate]);
-
     return (
         <Container className='d-flex justify-content-center'>
             <Row className='justify-content-center mt-3 w-50'>

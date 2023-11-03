@@ -10,20 +10,22 @@ import ErrorHandler from "./ErrorHandler";
 function App() {
     const [currFromUrl, numberFromUrl] =
         [((window.location.pathname).slice(1, 4)).toUpperCase(),
-            Number((window.location.pathname).slice(5))]
+            // Number((window.location.pathname).slice(5))]
+            ((window.location.pathname).slice(5))]
     const [currency, setCurrency] = useState(currFromUrl || 'EUR')
     // const [number, setNumber] = useState(numberFromUrl || 10)
-    const [number, setNumber] = useState((numberFromUrl === 0 ? 10 : numberFromUrl ))
+    const [number, setNumber] = useState(((numberFromUrl === '') ? 10 : Number(numberFromUrl)))
     const [errorMessage, setErrorMessage] = useState('')
     const [errorVariant, setErrorVariant] = useState('')
-    console.log(numberFromUrl)
     return (
         <Router>
             <div className="App">
                 <Header/>
                 <Inputs
                     actCurrency={currency || currFromUrl}
-                    actNumber={numberFromUrl || number}
+                    // actNumber={numberFromUrl || number}
+                    actNumber={number}
+                    // actNumber={(Number(numberFromUrl) || number)}
                     onCurrencyChange={setCurrency}
                     onNumberChange={setNumber}
                     onErrorChange={setErrorMessage}
@@ -72,7 +74,8 @@ function App() {
                                 />) ||
                             <CurrencyList
                                 actCurrency={currFromUrl || currency}
-                                actNumber={numberFromUrl || number}
+                                // actNumber={numberFromUrl || number}
+                                actNumber={Number(numberFromUrl) || number}
                                 onErrorChange={setErrorMessage}
                                 onErrorVariantChange={setErrorVariant}
                                 onNumberChange={setNumber}
@@ -82,16 +85,11 @@ function App() {
                     />
                     <Route
                         path="/:actCurrency/:actNumber"
-                        element={(
-                                errorMessage &&
-                                errorVariant &&
-                                <ErrorHandler
-                                    errorMessage={errorMessage}
-                                    errorVariant={errorVariant}
-                                />) ||
+                        element={
                             <CurrencyList
                                 actCurrency={currFromUrl || currency}
-                                actNumber={numberFromUrl || number}
+                                // actNumber={numberFromUrl || number}
+                                actNumber={Number(numberFromUrl) || number}
                                 onErrorChange={setErrorMessage}
                                 onErrorVariantChange={setErrorVariant}
                                 onNumberChange={setNumber}
