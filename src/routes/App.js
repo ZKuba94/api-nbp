@@ -10,10 +10,8 @@ import ErrorHandler from "./ErrorHandler";
 function App() {
     const [currFromUrl, numberFromUrl] =
         [((window.location.pathname).slice(1, 4)).toUpperCase(),
-            // Number((window.location.pathname).slice(5))]
             ((window.location.pathname).slice(5))]
     const [currency, setCurrency] = useState(currFromUrl || 'EUR')
-    // const [number, setNumber] = useState(numberFromUrl || 10)
     const [number, setNumber] = useState(((numberFromUrl === '') ? 10 : Number(numberFromUrl)))
     const [errorMessage, setErrorMessage] = useState('')
     const [errorVariant, setErrorVariant] = useState('')
@@ -23,15 +21,13 @@ function App() {
                 <Header/>
                 <Inputs
                     actCurrency={currency || currFromUrl}
-                    // actNumber={numberFromUrl || number}
                     actNumber={number}
-                    // actNumber={(Number(numberFromUrl) || number)}
                     onCurrencyChange={setCurrency}
                     onNumberChange={setNumber}
                     onErrorChange={setErrorMessage}
                     onErrorVariantChange={setErrorVariant}
                     currencyFromUrl={currFromUrl}
-                    numberFromUrl={numberFromUrl}
+                    numberFromUrl={Number(numberFromUrl)}
                 />
                 <Routes>
                     <Route
@@ -49,7 +45,6 @@ function App() {
                                 actNumber={10}
                                 onErrorChange={setErrorMessage}
                                 onErrorVariantChange={setErrorVariant}
-                                onNumberChange={setNumber}
                             />}
                     />
                     <Route
@@ -74,11 +69,9 @@ function App() {
                                 />) ||
                             <CurrencyList
                                 actCurrency={currFromUrl || currency}
-                                // actNumber={numberFromUrl || number}
                                 actNumber={Number(numberFromUrl) || number}
                                 onErrorChange={setErrorMessage}
                                 onErrorVariantChange={setErrorVariant}
-                                onNumberChange={setNumber}
                             />
 
                         }
@@ -88,11 +81,9 @@ function App() {
                         element={
                             <CurrencyList
                                 actCurrency={currFromUrl || currency}
-                                // actNumber={numberFromUrl || number}
                                 actNumber={Number(numberFromUrl) || number}
                                 onErrorChange={setErrorMessage}
                                 onErrorVariantChange={setErrorVariant}
-                                onNumberChange={setNumber}
                             />
                         }
                     />

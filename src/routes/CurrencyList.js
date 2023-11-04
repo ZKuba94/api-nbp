@@ -9,20 +9,26 @@ function CurrencyList({actCurrency, actNumber, onErrorChange, onErrorVariantChan
     const [table, setTable] = useState([])
     const [loading, setLoading] = useState(false)
     const navigate = useNavigate()
+    console.log(actNumber < 1 || actNumber > 255)
     const debounceFetch = () => {
         const fetchData = async () => {
             try {
-                console.log(actNumber)
                 setLoading(true)
-                const {data} = await axios.get(
-                    `/api/exchangerates/rates/A/${actCurrency}/last/${actNumber}/`
-                );
+                const {data} = await axios.get(`/api/exchangerates/rates/A/${actCurrency}/last/${actNumber}/`);
                 setTable(data.rates);
             } catch (error) {
-                // onErrorChange(`Your request is out of range, please choose number 1-255. ${error.message}`)
-                onErrorChange(`Please insert number in range 1-255.`)
-                onErrorVariantChange('danger')
-                navigate(`/${actCurrency}`)
+                // there should be another condition checking, if currency is corrected, but the updating of state
+                // in another component, doesn't work on time when it's needed... here array with currencies fetched
+                // in Inputs would be empty (if they would have common state in App.js).
+                if (actNumber < 1 || actNumber > 255 || Number.isNaN(actNumber)) {
+                    onErrorChange(`Please insert number in range 1-255.`)
+                    onErrorVariantChange('warning')
+                    navigate(`/${actCurrency}`)
+                } else {
+                    onErrorChange(`Cannot get the resources because of incorrect reference. ${error.message}.`)
+                    onErrorVariantChange('danger')
+                    navigate(`/error`)
+                }
             } finally {
                 setLoading(false)
             }

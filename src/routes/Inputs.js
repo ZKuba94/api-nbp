@@ -23,14 +23,16 @@ export function Inputs({
                 const {data} = await axios.get(`/api/exchangerates/tables/A`)
                 setCurrencies(data[0].rates.map(el => ({'name': el.currency, code: el.code})))
                 const curr = (data[0].rates.map(el => ({'name': el.currency, code: el.code}))).map(el => el.code)
+                // this condition should be in CurrencyList, but i have a problem, described there.
                 if (!curr.includes(actCurrency || currencyFromUrl)) {
                     onErrorChange(`Please select currency from the list above or insert it in international
                     format, e.g. 'AUD', 'USD', 'EUR', etc.`)
                     onErrorVariantChange('danger')
+                    onNumberChange(10)
                     navigate(`/error`)
                 }
             } catch (error) {
-                onErrorChange(`Cannot get the resources because of incorrect reference. ${error.message}`)
+                onErrorChange(`Cannot get the resources because of incorrect reference. ${error.message}.`)
                 onErrorVariantChange('danger')
                 navigate(`/error`)
             } finally {
@@ -39,6 +41,7 @@ export function Inputs({
         }
         fetchData()
     }, [navigate, actCurrency, actNumber, currencyFromUrl, numberFromUrl])
+    // put above empty array if you want useEffect to start only once.
     const listItems = currencies.map(currency =>
         <option key={currency.code} value={currency['code']}>{currency.code} - {currency.name}</option>
     )
