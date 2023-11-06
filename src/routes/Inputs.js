@@ -2,7 +2,7 @@ import {Form, Row, Col} from 'react-bootstrap'
 import {useEffect, useState} from "react";
 import axios from "axios";
 import PropTypes from "prop-types";
-import {redirect, useNavigate} from 'react-router-dom'
+import {useNavigate} from 'react-router-dom'
 
 export function Inputs({
                            actCurrency,
@@ -28,8 +28,7 @@ export function Inputs({
                     format, e.g. 'AUD', 'USD', 'EUR', etc.`)
                     onErrorVariantChange('danger')
                     onNumberChange(10)
-                    // navigate(`/error`)
-                    redirect(`/error`)
+                    navigate(`/error`)
                 }
             } catch (error) {
                 onErrorChange(`Cannot get the resources because of incorrect reference. ${error.message}.`)
