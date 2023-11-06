@@ -39,7 +39,7 @@ export function Inputs({
             }
         }
         fetchData()
-    }, [])
+    }, [actCurrency, actNumber])
     // put above empty array if you want useEffect to start only once.
     const listItems = currencies.map(currency =>
         <option key={currency.code} value={currency['code']}>{currency.code} - {currency.name}</option>
