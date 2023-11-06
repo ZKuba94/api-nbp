@@ -2,7 +2,7 @@ import {Form, Row, Col} from 'react-bootstrap'
 import {useEffect, useState} from "react";
 import axios from "axios";
 import PropTypes from "prop-types";
-import {useNavigate} from 'react-router-dom'
+import {redirect, useNavigate} from 'react-router-dom'
 
 export function Inputs({
                            actCurrency,
@@ -12,7 +12,6 @@ export function Inputs({
                            onErrorChange,
                            onErrorVariantChange,
                            currencyFromUrl,
-                           numberFromUrl,
                        }) {
     const [currencies, setCurrencies] = useState([])
     const [loading, setLoading] = useState(true)
@@ -23,13 +22,14 @@ export function Inputs({
                 const {data} = await axios.get(`/api/exchangerates/tables/A`)
                 setCurrencies(data[0].rates.map(el => ({'name': el.currency, code: el.code})))
                 const curr = (data[0].rates.map(el => ({'name': el.currency, code: el.code}))).map(el => el.code)
-                // this condition should be in CurrencyList, but i have a problem, described there.
+                // this condition should be in CurrencyList, but I have a problem, described there.
                 if (!curr.includes(actCurrency || currencyFromUrl)) {
                     onErrorChange(`Please select currency from the list above or insert it in international
                     format, e.g. 'AUD', 'USD', 'EUR', etc.`)
                     onErrorVariantChange('danger')
                     onNumberChange(10)
-                    navigate(`/error`)
+                    // navigate(`/error`)
+                    redirect(`/error`)
                 }
             } catch (error) {
                 onErrorChange(`Cannot get the resources because of incorrect reference. ${error.message}.`)
@@ -40,7 +40,7 @@ export function Inputs({
             }
         }
         fetchData()
-    }, [navigate, actCurrency, actNumber, currencyFromUrl, numberFromUrl])
+    }, [])
     // put above empty array if you want useEffect to start only once.
     const listItems = currencies.map(currency =>
         <option key={currency.code} value={currency['code']}>{currency.code} - {currency.name}</option>

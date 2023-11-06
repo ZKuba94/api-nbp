@@ -9,7 +9,6 @@ function CurrencyList({actCurrency, actNumber, onErrorChange, onErrorVariantChan
     const [table, setTable] = useState([])
     const [loading, setLoading] = useState(false)
     const navigate = useNavigate()
-    console.log(actNumber < 1 || actNumber > 255)
     const debounceFetch = () => {
         const fetchData = async () => {
             try {

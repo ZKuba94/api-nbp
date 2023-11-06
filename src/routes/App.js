@@ -27,7 +27,7 @@ function App() {
                     onErrorChange={setErrorMessage}
                     onErrorVariantChange={setErrorVariant}
                     currencyFromUrl={currFromUrl}
-                    numberFromUrl={Number(numberFromUrl)}
+                    // numberFromUrl={Number(numberFromUrl)}
                 />
                 <Routes>
                     <Route
